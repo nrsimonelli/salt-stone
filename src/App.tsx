@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Button } from './components/ui/button'
 
 const SCREEN_STATE = {
   START: 'start',
@@ -16,24 +17,15 @@ function App() {
   const [screen, setScreen] = useState<ScreenState>(SCREEN_STATE.START)
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen space-y-8 bg-foreground text-background'>
+    <div className='flex flex-col items-center justify-center space-y-8 '>
       <p>SALT STONE</p>
       {screen === SCREEN_STATE.START && (
         <div className='space-y-8'>
           <p>start screen</p>
           <div className='flex flex-col space-y-4'>
-            <button onClick={() => setScreen(SCREEN_STATE.CHARACTER)}>
+            <Button onClick={() => setScreen(SCREEN_STATE.CHARACTER)}>
               Start
-            </button>
-            <button onClick={() => setScreen(SCREEN_STATE.CHARACTER)}>
-              Start
-            </button>
-            <button onClick={() => setScreen(SCREEN_STATE.CHARACTER)}>
-              Start
-            </button>
-            <button onClick={() => setScreen(SCREEN_STATE.CHARACTER)}>
-              Start
-            </button>
+            </Button>
           </div>
         </div>
       )}
