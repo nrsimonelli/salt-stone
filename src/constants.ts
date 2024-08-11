@@ -1,3 +1,4 @@
+export type ScreenState = (typeof SCREEN_STATE)[keyof typeof SCREEN_STATE]
 export const SCREEN_STATE = {
   START: 'start',
   SETTINGS: 'settings',
@@ -7,8 +8,6 @@ export const SCREEN_STATE = {
   VICTORY: 'victory',
   DEFEAT: 'defeat',
 } as const
-
-export type ScreenState = (typeof SCREEN_STATE)[keyof typeof SCREEN_STATE]
 
 export const STAT_KEYS = [
   'hp',
@@ -78,4 +77,12 @@ export const STARTER_CHARACTERS = {
       guard: 20,
     },
   },
+}
+
+export interface PlayerData {
+  startingCharacter: string
+  displayName: string
+  stats: Record<(typeof STAT_KEYS)[number], number>
+  abilities: string[]
+  skills: string[]
 }
