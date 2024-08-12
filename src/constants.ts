@@ -16,7 +16,7 @@ export const STAT_KEYS = [
   'speed',
   'accuracy',
   'evade',
-  'protection',
+  'defense',
   'guard',
 ] as const
 
@@ -35,7 +35,7 @@ export const STARTER_CHARACTERS = {
       accuracy: 105,
       evade: 55,
 
-      protection: 5,
+      defense: 2,
       guard: 5,
     },
   },
@@ -54,7 +54,7 @@ export const STARTER_CHARACTERS = {
       accuracy: 95,
       evade: 20,
 
-      protection: 20,
+      defense: 4,
       guard: 35,
     },
   },
@@ -73,7 +73,7 @@ export const STARTER_CHARACTERS = {
       accuracy: 100,
       evade: 40,
 
-      protection: 15,
+      defense: 3,
       guard: 20,
     },
   },

@@ -1,5 +1,5 @@
-import { ScreenState } from '@/constants'
-import { createContext, useContext } from 'react'
+import { SCREEN_STATE, ScreenState } from '@/constants'
+import { createContext, FC, ReactNode, useContext, useState } from 'react'
 
 export interface ScreenContext {
   screen: ScreenState
@@ -12,3 +12,15 @@ export const ScreenStateContext = createContext<ScreenContext>({
 })
 
 export const useScreenContext = () => useContext(ScreenStateContext)
+
+export const ScreenStateProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [screen, setScreen] = useState<ScreenState>(() => SCREEN_STATE.START)
+
+  return (
+    <ScreenStateContext.Provider value={{ screen, setScreen }}>
+      {children}
+    </ScreenStateContext.Provider>
+  )
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { SCREEN_STATE, STARTER_CHARACTERS } from '@/constants'
+import { SCREEN_STATE, STARTER_CHARACTERS, STAT_KEYS } from '@/constants'
 import { cn } from '@/lib/utils'
 import { useScreenContext } from './components/screen-state-context'
 import { usePlayerDataContext } from './components/player-data-context'
@@ -45,8 +45,17 @@ export const CharacterSelect = () => {
       </div>
 
       {/* display of stats and attributes */}
-      <div>STATS</div>
       {/* confirmation button */}
+      <div className='space-y-1 py-4'>
+        <div>STATS {currentSelection?.displayName ?? ''}</div>
+        {STAT_KEYS.map((stat) => (
+          <div>
+            <p>
+              {stat}: {currentSelection?.stats[stat] ?? 0}
+            </p>
+          </div>
+        ))}
+      </div>
       <Button
         disabled={!currentSelection}
         onClick={() => {
