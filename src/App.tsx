@@ -1,25 +1,31 @@
-import { useState } from 'react'
-
 import { StartScreen } from './start-screen'
-import { ScreenStateContext } from './components/ui/screen-state-context'
-import { SCREEN_STATE, ScreenState } from './constants'
+import { SCREEN_STATE } from './constants'
+import { CharacterSelect } from './character-select'
+import { usePlayerDataContext } from './components/player-data-context'
+import { useScreenContext } from './components/screen-state-context'
 
 function App() {
-  const [screen, setScreen] = useState<ScreenState>(SCREEN_STATE.START)
+  // TEMP for debugging
+  const { playerData } = usePlayerDataContext()
+  const { screen } = useScreenContext()
 
   return (
-    <ScreenStateContext.Provider value={{ screen, setScreen }}>
-      <div className='flex flex-col items-center justify-center space-y-8 '>
-        <p>SALT STONE</p>
-        <p>SCREEN: {screen}</p>
-        {screen === SCREEN_STATE.START && <StartScreen />}
-        {screen === SCREEN_STATE.CHARACTER && <StartScreen />}
-        {screen === SCREEN_STATE.PLANNING && <StartScreen />}
-        {screen === SCREEN_STATE.BATTLE && <StartScreen />}
-        {screen === SCREEN_STATE.VICTORY && <StartScreen />}
-        {screen === SCREEN_STATE.DEFEAT && <StartScreen />}
+    <div className='flex flex-col items-center justify-center space-y-8 '>
+      <p>SALT STONE</p>
+      <p>SCREEN: {screen}</p>
+      {screen === SCREEN_STATE.START && <StartScreen />}
+      {screen === SCREEN_STATE.CHARACTER && <CharacterSelect />}
+      {screen === SCREEN_STATE.PLANNING && <StartScreen />}
+      {screen === SCREEN_STATE.BATTLE && <StartScreen />}
+      {screen === SCREEN_STATE.VICTORY && <StartScreen />}
+      {screen === SCREEN_STATE.DEFEAT && <StartScreen />}
+
+      {/* TEMP for debugging */}
+      <div>
+        <pre>{JSON.stringify(playerData, undefined, 2)}</pre>
       </div>
-    </ScreenStateContext.Provider>
+      {/* End TEMP */}
+    </div>
   )
 }
 
