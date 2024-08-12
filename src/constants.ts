@@ -38,6 +38,15 @@ export const STARTER_CHARACTERS = {
       defense: 2,
       guard: 5,
     },
+    abilities: [
+      {
+        name: 'double hit',
+        description: 'hits twice',
+        potency: 60,
+        accuracy: 100,
+        hits: 2,
+      },
+    ],
   },
   BLUE: {
     name: 'BLUE',
@@ -57,6 +66,15 @@ export const STARTER_CHARACTERS = {
       defense: 4,
       guard: 35,
     },
+    abilities: [
+      {
+        name: 'double hit',
+        description: 'hits twice',
+        potency: 60,
+        accuracy: 100,
+        hits: 2,
+      },
+    ],
   },
   RED: {
     name: 'RED',
@@ -76,13 +94,61 @@ export const STARTER_CHARACTERS = {
       defense: 3,
       guard: 20,
     },
+    abilities: [
+      {
+        name: 'double hit',
+        description: 'hits twice',
+        potency: 60,
+        accuracy: 100,
+        hits: 2,
+      },
+    ],
   },
+}
+
+export const STARTER_ENEMIES = {
+  RED_GOBLIN: {
+    name: 'RED_GOBLIN',
+    displayName: 'The Red Goblin',
+    color: 'bg-red-500',
+
+    stats: {
+      hp: 3,
+      attack: 3,
+
+      crit: 5,
+      speed: 4,
+
+      accuracy: 100,
+      evade: 30,
+
+      defense: 2,
+      guard: 15,
+    },
+    abilities: [
+      {
+        name: 'double hit',
+        description: 'hits twice',
+        potency: 60,
+        accuracy: 100,
+        hits: 2,
+      },
+    ],
+  },
+}
+
+interface AbilityData {
+  name: string
+  description: string
+  potency: number
+  accuracy: number
+  hits: number
 }
 
 export interface PlayerData {
   startingCharacter: string
   displayName: string
   stats: Record<(typeof STAT_KEYS)[number], number>
-  abilities: string[]
+  abilities: AbilityData[]
   skills: string[]
 }
