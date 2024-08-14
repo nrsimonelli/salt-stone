@@ -56,14 +56,26 @@ export const MockBattle = () => {
 
   const handleTurnAction = () => {
     // will need to actually roll for hit, crit, guard, and then deal corresponding damage.
+    // placehodler fn for now
+    setCurrentTurn('player')
   }
+
+  const valueIsNumber = (val: number | null): val is number => {
+    if (val === null) {
+      return false
+    }
+    return true
+  }
+
+  const isConfirmDisabled =
+    !valueIsNumber(selectedAbility) || !valueIsNumber(selectedEnemy)
 
   return (
     <div className='w-full flex justify-center flex-col items-center'>
       <p>Mock Battle</p>
       <pre>
         {JSON.stringify(
-          selectedAbility !== null
+          valueIsNumber(selectedAbility)
             ? playerState.abilities[selectedAbility]
             : null,
           undefined,
@@ -72,7 +84,7 @@ export const MockBattle = () => {
       </pre>
       <pre>
         {JSON.stringify(
-          selectedEnemy !== null ? enemyState[selectedEnemy].stats : null,
+          valueIsNumber(selectedEnemy) ? enemyState[selectedEnemy].stats : null,
           undefined,
           2
         )}
@@ -137,10 +149,7 @@ export const MockBattle = () => {
             </div>
           ))}
         </div>
-        <Button
-          disabled={selectedAbility === null || selectedEnemy === null}
-          onClick={handleTurnAction}
-        >
+        <Button disabled={isConfirmDisabled} onClick={handleTurnAction}>
           Confirm
         </Button>
       </div>
