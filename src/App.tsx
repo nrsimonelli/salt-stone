@@ -3,6 +3,7 @@ import { SCREEN_STATE } from './constants'
 import { CharacterSelect } from './character-select'
 import { usePlayerDataContext } from './components/player-data-context'
 import { useScreenContext } from './components/screen-state-context'
+import { MockBattle } from './mock-battle'
 
 function App() {
   // TEMP for debugging
@@ -15,7 +16,7 @@ function App() {
       <p>SCREEN: {screen}</p>
       {screen === SCREEN_STATE.START && <StartScreen />}
       {screen === SCREEN_STATE.CHARACTER && <CharacterSelect />}
-      {screen === SCREEN_STATE.PLANNING && <StartScreen />}
+      {screen === SCREEN_STATE.PLANNING && <MockBattle />}
       {screen === SCREEN_STATE.BATTLE && <StartScreen />}
       {screen === SCREEN_STATE.VICTORY && <StartScreen />}
       {screen === SCREEN_STATE.DEFEAT && <StartScreen />}

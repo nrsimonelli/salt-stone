@@ -40,6 +40,13 @@ export const STARTER_CHARACTERS = {
     },
     abilities: [
       {
+        name: 'basic slash',
+        description: 'a basic attack',
+        potency: 100,
+        accuracy: 100,
+        hits: 1,
+      },
+      {
         name: 'double hit',
         description: 'hits twice',
         potency: 60,
@@ -127,6 +134,13 @@ export const STARTER_ENEMIES = {
     },
     abilities: [
       {
+        name: 'basic slash',
+        description: 'a basic attack',
+        potency: 100,
+        accuracy: 100,
+        hits: 1,
+      },
+      {
         name: 'double hit',
         description: 'hits twice',
         potency: 60,
@@ -151,4 +165,5 @@ export interface PlayerData {
   stats: Record<(typeof STAT_KEYS)[number], number>
   abilities: AbilityData[]
   skills: string[]
+  color: string
 }

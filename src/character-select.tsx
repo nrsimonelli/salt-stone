@@ -49,7 +49,7 @@ export const CharacterSelect = () => {
       <div className='space-y-1 py-4'>
         <div>STATS {currentSelection?.displayName ?? ''}</div>
         {STAT_KEYS.map((stat) => (
-          <div>
+          <div key={stat}>
             <p>
               {stat}: {currentSelection?.stats[stat] ?? 0}
             </p>

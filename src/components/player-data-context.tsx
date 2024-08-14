@@ -17,11 +17,12 @@ export const defaultPlayerData: PlayerData = {
     speed: 0,
     accuracy: 0,
     evade: 0,
-    protection: 0,
+    defense: 0,
     guard: 0,
   },
   abilities: [],
   skills: [],
+  color: '',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
