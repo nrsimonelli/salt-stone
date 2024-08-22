@@ -1,25 +1,3 @@
-export type ScreenState = (typeof SCREEN_STATE)[keyof typeof SCREEN_STATE]
-export const SCREEN_STATE = {
-  START: 'start',
-  SETTINGS: 'settings',
-  CHARACTER: 'character',
-  PLANNING: 'planning',
-  BATTLE: 'battle',
-  VICTORY: 'victory',
-  DEFEAT: 'defeat',
-} as const
-
-export const STAT_KEYS = [
-  'hp',
-  'attack',
-  'crit',
-  'speed',
-  'accuracy',
-  'evade',
-  'defense',
-  'guard',
-] as const
-
 export const STARTER_CHARACTERS = {
   GREEN: {
     name: 'GREEN',
@@ -151,19 +129,13 @@ export const STARTER_ENEMIES = {
   },
 }
 
-interface AbilityData {
-  name: string
-  description: string
-  potency: number
-  accuracy: number
-  hits: number
-}
-
-export interface PlayerData {
-  startingCharacter: string
-  displayName: string
-  stats: Record<(typeof STAT_KEYS)[number], number>
-  abilities: AbilityData[]
-  skills: string[]
-  color: string
-}
+export const STAT_KEYS = [
+  'hp',
+  'attack',
+  'crit',
+  'speed',
+  'accuracy',
+  'evade',
+  'defense',
+  'guard',
+] as const

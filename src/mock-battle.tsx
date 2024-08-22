@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { usePlayerDataContext } from './components/player-data-context'
 import { Button } from './components/ui/button'
-import { STARTER_ENEMIES } from './constants'
+import { STARTER_ENEMIES } from '@/constants/character-data'
 import { calculateHitChance, cn } from './lib/utils'
+import { PlayerData } from './types'
 
 const generateRandomEnemy = () => {
   const hp = Math.round(Math.max(Math.random() * 10, 1))
@@ -26,7 +27,11 @@ const generateRandomEnemy = () => {
 export const MockBattle = () => {
   const { playerData } = usePlayerDataContext()
 
-  const initialPlayerState = { ...playerData, maxHp: playerData.stats.hp }
+  type PlayerState = PlayerData & { maxHp: number }
+  const initialPlayerState: PlayerState = {
+    ...playerData,
+    maxHp: playerData.stats.hp,
+  }
   const initialEnemyState = [
     generateRandomEnemy(),
     generateRandomEnemy(),

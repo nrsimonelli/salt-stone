@@ -11,7 +11,7 @@ function App() {
   const { screen } = useScreenContext()
 
   return (
-    <div className='flex flex-col items-center justify-center space-y-8 '>
+    <div className='flex flex-col items-center justify-center space-y-8 dark'>
       <p>SALT STONE</p>
       <p>SCREEN: {screen}</p>
       {screen === SCREEN_STATE.START && <StartScreen />}
