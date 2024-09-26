@@ -4,6 +4,7 @@ import { CharacterSelect } from './character-select'
 import { usePlayerDataContext } from './components/player-data-context'
 import { useScreenContext } from './components/screen-state-context'
 import { MockBattle } from './mock-battle'
+import { Demo } from './demo'
 
 function App() {
   // TEMP for debugging
@@ -14,17 +15,18 @@ function App() {
     <div className='flex flex-col items-center justify-center space-y-8 dark'>
       <p>SALT STONE</p>
       <p>SCREEN: {screen}</p>
-      {screen === SCREEN_STATE.START && <StartScreen />}
+      {/* {screen === SCREEN_STATE.START && <StartScreen />}
       {screen === SCREEN_STATE.CHARACTER && <CharacterSelect />}
       {screen === SCREEN_STATE.PLANNING && <MockBattle />}
       {screen === SCREEN_STATE.BATTLE && <StartScreen />}
       {screen === SCREEN_STATE.VICTORY && <StartScreen />}
-      {screen === SCREEN_STATE.DEFEAT && <StartScreen />}
+      {screen === SCREEN_STATE.DEFEAT && <StartScreen />} */}
 
       {/* TEMP for debugging */}
-      <div>
+      {/* <div>
         <pre>{JSON.stringify(playerData, undefined, 2)}</pre>
-      </div>
+      </div> */}
+      <Demo />
       {/* End TEMP */}
     </div>
   )

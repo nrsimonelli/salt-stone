@@ -15,6 +15,10 @@ export function calculateHitChance(
   return Math.min(hitChance, 100)
 }
 
+export function getRandomInt() {
+  return Math.floor(Math.random() * 100) + 1
+}
+
 export function calculateCritChance(crit: number, modifiers: number[]) {
   const critChance = crit + modifiers.reduce((acc, mod) => acc + mod, 0)
   // returns a crit chance between 0 and 100, representing % chance to crit
