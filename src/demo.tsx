@@ -268,7 +268,7 @@ export const Demo = () => {
     (currentTurn === 'player' && !playerSelectedAbility)
 
   return (
-    <div className='border border-black flex-col flex items-center w-full *-[div]:border *-[div]:border-blue-400 space-y-2'>
+    <div className='border border-black flex-col flex items-center w-full space-y-2'>
       <p>Mock Battle</p>
 
       <div className='flex flex-row flex-wrap w-full max-w-[1040px]'>
