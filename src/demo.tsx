@@ -26,7 +26,7 @@ const sampleAbilities = [
     target: 'self',
   },
   {
-    name: 'double hit',
+    name: 'double slash',
     description: 'hits twice',
     physicalPotency: 75,
     magicalPotency: 0,
@@ -132,7 +132,7 @@ export const Demo = () => {
         crit: boolean
         guard: boolean
         damage: number
-      }
+      }[]
     }[]
   >([])
   const [currentTurn, setCurrentTurn] = useState<'player' | 'enemy'>('player')
@@ -210,11 +210,7 @@ export const Demo = () => {
     const critChance = calculateCritChance(moveTakerStats.crit, [0])
     const guardChance = moveTargetStats.guard
 
-    const hit = getRandomInt() <= hitChance
-    const crit = getRandomInt() <= critChance
-    const guard = getRandomInt() <= guardChance
-
-    const calculateDamage = () => {
+    const calculateDamage = (hit: boolean, crit: boolean, guard: boolean) => {
       if (!hit) {
         return 0
       }
@@ -222,19 +218,39 @@ export const Demo = () => {
       const physicalDamage =
         activeAbilityStats.physicalPotency === 0
           ? 0
-          : moveTakerStats.pAtk * (activeAbilityStats.physicalPotency / 100) -
-            moveTargetStats.pDef
+          : Math.max(
+              moveTakerStats.pAtk * (activeAbilityStats.physicalPotency / 100) -
+                moveTargetStats.pDef,
+              0
+            )
       const magicalDamage =
         activeAbilityStats?.magicalPotency === 0
           ? 0
-          : moveTakerStats.mAtk * (activeAbilityStats.magicalPotency / 100) -
-            moveTargetStats.mDef
+          : Math.max(
+              moveTakerStats.mAtk * (activeAbilityStats.magicalPotency / 100) -
+                moveTargetStats.mDef,
+              0
+            )
 
       const damage =
         Math.round(physicalDamage + magicalDamage) *
         (crit ? 3 : 1) *
         (guard ? 0.5 : 1)
       return damage
+    }
+
+    const result = []
+
+    for (let i = 0; i < activeAbilityStats.hits; i++) {
+      const hit = getRandomInt() <= hitChance
+      const crit = hit ? getRandomInt() <= critChance : false
+      const guard = hit ? getRandomInt() <= guardChance : false
+      result.push({
+        hit,
+        crit,
+        guard,
+        damage: calculateDamage(hit, crit, guard),
+      })
     }
 
     const move = {
@@ -245,18 +261,14 @@ export const Demo = () => {
         critChance,
         guardChance,
       },
-      result: {
-        hit,
-        crit,
-        guard,
-        damage: calculateDamage(),
-      },
+      result,
+      totalDamage: result.reduce((acc, curr) => acc + curr.damage, 0),
     }
 
     if (currentTurn === 'player') {
-      setEnemyHp(enemyHp - move.result.damage)
+      setEnemyHp(enemyHp - move.totalDamage)
     } else {
-      setPlayerHp(playerHp - move.result.damage)
+      setPlayerHp(playerHp - move.totalDamage)
     }
 
     setMoveHistory((prev) => [...prev, move])
@@ -279,33 +291,37 @@ export const Demo = () => {
           <div className='flex-row flex space-x-2'>
             <div className='flex-col flex flex-1'>
               {Object.entries(demoData.player.stats).map(([key, value]) => (
-                <div className='inline-flex justify-between w-32'>
+                <div key={key} className='inline-flex justify-between w-32'>
                   <p>{key}:</p>
                   <p className='w-8'>{value}</p>
                 </div>
               ))}
             </div>
-            <div className='flex-col flex flex-1'>
+            <div className='flex-col flex flex-1 space-y-2'>
+              <Select
+                disabled={currentTurn !== 'player'}
+                onValueChange={(value) => setPlayerSelectedAbility(value)}
+              >
+                <SelectTrigger className='w-[180px]'>
+                  <SelectValue placeholder='Select an ability...' />
+                </SelectTrigger>
+                <SelectContent>
+                  {demoData.player.abilities.map((ability) => (
+                    <SelectItem
+                      className='capitalize'
+                      key={ability.name}
+                      value={ability.name}
+                    >
+                      {ability.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
               <div>
-                <Select
-                  disabled={currentTurn !== 'player'}
-                  onValueChange={(value) => setPlayerSelectedAbility(value)}
-                >
-                  <SelectTrigger className='w-[180px]'>
-                    <SelectValue placeholder='Select an ability...' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {demoData.player.abilities.map((ability) => (
-                      <SelectItem
-                        className='capitalize'
-                        key={ability.name}
-                        value={ability.name}
-                      >
-                        {ability.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                {sampleAbilities.find(
+                  (ability) => ability.name === playerSelectedAbility
+                )?.description ?? ''}
               </div>
             </div>
           </div>
@@ -318,33 +334,37 @@ export const Demo = () => {
           <div className='flex-row flex space-x-2'>
             <div className='flex-col flex'>
               {Object.entries(demoData.enemy.stats).map(([key, value]) => (
-                <div className='inline-flex justify-between w-32'>
+                <div key={key} className='inline-flex justify-between w-32'>
                   <p>{key}:</p>
                   <p className='w-8'>{value}</p>
                 </div>
               ))}
             </div>
-            <div className='flex-col flex flex-1'>
+            <div className='flex-col flex flex-1 space-y-2'>
+              <Select
+                disabled={currentTurn !== 'enemy'}
+                onValueChange={(value) => setEnemySelectedAbility(value)}
+              >
+                <SelectTrigger className='w-[180px]'>
+                  <SelectValue placeholder='Select an ability...' />
+                </SelectTrigger>
+                <SelectContent>
+                  {demoData.enemy.abilities.map((ability) => (
+                    <SelectItem
+                      className='capitalize'
+                      key={ability.name}
+                      value={ability.name}
+                    >
+                      {ability.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
               <div>
-                <Select
-                  disabled={currentTurn !== 'enemy'}
-                  onValueChange={(value) => setEnemySelectedAbility(value)}
-                >
-                  <SelectTrigger className='w-[180px]'>
-                    <SelectValue placeholder='Select an ability...' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {demoData.enemy.abilities.map((ability) => (
-                      <SelectItem
-                        className='capitalize'
-                        key={ability.name}
-                        value={ability.name}
-                      >
-                        {ability.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                {sampleAbilities.find(
+                  (ability) => ability.name === enemySelectedAbility
+                )?.description ?? ''}
               </div>
             </div>
           </div>
@@ -359,28 +379,26 @@ export const Demo = () => {
 
       <div>
         <p>move history</p>
-        <div className='flex flex-col space-y-2'>
+        <div className='flex flex-col-reverse gap-2'>
           {moveHistory.map((move, index) => (
             <div
               key={index}
               className={cn(
-                'flex flex-col',
+                'flex flex-col flex-wrap p-4 rounded-lg',
                 move.character === 'player' ? 'bg-blue-500' : 'bg-red-500'
               )}
             >
-              <p>
-                <span className='font-bold'>{move.ability} </span>
-                {!move.result.hit
-                  ? 'missed'
-                  : move.result.crit
-                  ? 'crit'
-                  : 'hit'}{' '}
-                for {move.result.damage}{' '}
-                {move.result.guard ? 'guarded damage.' : 'damage.'}
-              </p>
+              <div className='text-2xl'>{index + 1}</div>
+              {move.result.map((res, hitIndex) => (
+                <p key={`move-${index}-hit-${hitIndex}`}>
+                  {move.ability}{' '}
+                  <span className='font-bold'>
+                    {!res.hit ? 'missed' : res.crit ? 'crit' : 'hit'}{' '}
+                  </span>
+                  for {res.damage} {res.guard ? 'guarded damage.' : 'damage.'}
+                </p>
+              ))}
 
-              <p className='font-bold'>{move.result.crit ? 'crit' : ''}</p>
-              <p className='font-bold'>{move.result.guard ? 'guard' : ''}</p>
               <p className='italics'>hit Chance: {move.chance.hitChance}%</p>
               <p className='italics'>crit Chance: {move.chance.critChance}%</p>
               <p className='italics'>
