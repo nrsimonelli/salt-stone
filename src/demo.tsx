@@ -284,7 +284,7 @@ export const Demo = () => {
       <p>Mock Battle</p>
 
       <div className='flex flex-row flex-wrap w-full max-w-[1040px]'>
-        <div className='flex flex-1 flex-col bg-blue-500 p-8'>
+        <div className='flex flex-1 flex-col bg-blue-500 p-8 space-y-2'>
           <p className='font-bold self-center'>
             PLAYER: {playerHp} / {demoData.player.stats.hp}
           </p>
@@ -327,12 +327,12 @@ export const Demo = () => {
           </div>
         </div>
 
-        <div className='flex flex-1 flex-col items-end bg-red-500 p-8'>
+        <div className='flex flex-1 flex-col bg-red-500 p-8 space-y-2'>
           <p className='font-bold self-center'>
             ENEMY: {enemyHp} / {demoData.enemy.stats.hp}
           </p>
           <div className='flex-row flex space-x-2'>
-            <div className='flex-col flex'>
+            <div className='flex-col flex flex-1'>
               {Object.entries(demoData.enemy.stats).map(([key, value]) => (
                 <div key={key} className='inline-flex justify-between w-32'>
                   <p>{key}:</p>
@@ -378,7 +378,7 @@ export const Demo = () => {
       </div>
 
       <div>
-        <p>move history</p>
+        <p>Move history</p>
         <div className='flex flex-col-reverse gap-2'>
           {moveHistory.map((move, index) => (
             <div
@@ -399,11 +399,9 @@ export const Demo = () => {
                 </p>
               ))}
 
-              <p className='italics'>hit Chance: {move.chance.hitChance}%</p>
-              <p className='italics'>crit Chance: {move.chance.critChance}%</p>
-              <p className='italics'>
-                guard Chance: {move.chance.guardChance}%
-              </p>
+              <p className='italic'>hit Chance: {move.chance.hitChance}%</p>
+              <p className='italic'>crit Chance: {move.chance.critChance}%</p>
+              <p className='italic'>guard Chance: {move.chance.guardChance}%</p>
             </div>
           ))}
         </div>
